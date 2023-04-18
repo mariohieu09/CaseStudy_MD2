@@ -1,3 +1,7 @@
+package Controller;
+
+import AccountBase.AccountManage;
+
 import java.util.Scanner;
 
 public class Main {
@@ -20,12 +24,13 @@ public class Main {
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t){
+
                                 case 3:
                                     System.exit(0);
                             }
                         }
                     }else{
-                        System.out.println("Khong ton tai mang nay");
+                        System.out.println("Khong ton tai tai khoan nay");
                         break;
                     }
                 case 3:

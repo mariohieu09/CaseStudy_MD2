@@ -1,8 +1,12 @@
-import java.io.Serializable;
+package AccountBase;
 
-public class Account implements Serializable {
-    private String AccountName;
-    private String Password;
+import java.io.Serializable;
+import ShoppingCart.ShoppingCart;
+public abstract class Account implements Serializable {
+    protected String AccountName;
+    protected String Password;
+
+
 
     public Account(String accountName, String password) {
         AccountName = accountName;

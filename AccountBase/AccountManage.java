@@ -1,3 +1,9 @@
+package AccountBase;
+
+import AccountBase.Account;
+import FileIO.ReadFile;
+import FileIO.WriteFile;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +35,7 @@ public class AccountManage {
         String name = sc.nextLine();
         System.out.println("Enter new password: ");
         String pass = sc.nextLine();
-        Account n = new Account(name, pass);
+        Account n = new UserAccount(name, pass);
         if(!checkingAcc(n)){
             addAcc(n);
         }else{
@@ -42,7 +48,7 @@ public class AccountManage {
         String name = sc.nextLine();
         System.out.println("Enter your password: ");
         String pass = sc.nextLine();
-        Account n = new Account(name,pass);
+        Account n = new UserAccount(name,pass);
         return n;
     }
 }
