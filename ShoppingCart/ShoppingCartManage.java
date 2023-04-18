@@ -16,7 +16,7 @@ public interface ShoppingCartManage {
 
 
     public void removeProd(Product p);
-    public void display(Product p);
+    public void display(Account p, String name);
 
     public void addToCart(String name, UserAccount acc);
 }

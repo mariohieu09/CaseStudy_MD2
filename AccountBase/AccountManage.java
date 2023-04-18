@@ -29,6 +29,7 @@ public class AccountManage {
         list.add(ss);
         WriteFile wf = new WriteFile();
         wf.writeFile(AccountStorage, list);
+
     }
     public void Signup(){
         System.out.println("Enter new acc name: ");
@@ -70,10 +71,6 @@ public class AccountManage {
         }
     }
 
-    public static void main(String[] args) {
-        Seller role = new Seller("hieu", "hieu");
-        AccountManage ss = new AccountManage();
-        ss.addAcc(role);
 
-    }
+
 }

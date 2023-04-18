@@ -7,7 +7,7 @@ import java.util.Random;
 
 import ShoppingCart.ShoppingCart;
 public abstract class Account implements Serializable {
-
+    static final long serialVersionUID = -7034897190745766939L;
     protected String AccountName;
     protected String Password;
     protected int id;

@@ -46,23 +46,30 @@ public class UserAccount extends Account implements ShoppingCartManage {
         WriteFile wf = new WriteFile();
         wf.writeFile(ProductStorage, list);
     }
-    public void display(Product p){
-        ReadFile rf = new ReadFile();
-        List<UserAccount> list = rf.readFile(DataBase);
-        if(p.equals(null)){
-            for(UserAccount s : list){
-                System.out.println(s.getCart().getList());
-            }
-        }else{
-            for(UserAccount s : list){
-                for(Product t : s.getCart().getList()){
-                    if(t.equals(p)){
-                        System.out.println(p);
-                        break;
-                    }
-                }
+
+
+   public void display(Account p, String name){
+       ReadFile rf = new ReadFile();
+        Accounts = rf.readFile(DataBase);
+        for(Account s : Accounts){
+            if(s.getAccountName().equals(p.getAccountName()) && s.getPassword().equals(p.getPassword())){
+                list = ((UserAccount)s).getCart().getList();
+               if(name.equals("")){
+                   for(Product d : list ){
+                       System.out.println(d);
+                   }
+               }else{
+                   for(Product d : list){
+                       if(d.getName().equals(name)){
+                           System.out.println(d);
+                           break;
+                       }
+                   }
+               }
+
             }
         }
+
     }
 
 

@@ -2,6 +2,7 @@ package Controller;
 
 import AccountBase.Account;
 import AccountBase.AccountManage;
+//import AccountBase.Seller;
 import AccountBase.Seller;
 import AccountBase.UserAccount;
 import ProductModel.Product;
@@ -23,23 +24,29 @@ public class Main {
                 case 2:
                     Account a = am.SignIn();
                     if(am.checkingAcc(a) && am.checkRole(a) == 0){
-                        while(true){
-                            System.out.println("Dang nhap thanh cong!");
+                        System.out.println("Dang nhap thanh cong!");
+                        int check = 0;
+                        while(check != 1){
                             System.out.println("\n1.Check gio hang \n2.Them vao gio hang \n3.Thanh toan \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             UserAccount user = new UserAccount(a.getAccountName(), a.getPassword());
                             switch (t){
                                 case 1:
+                                    System.out.println("Enter a name: ");
+                                    String Prodname = sc.nextLine();
+                                    user.display(user, Prodname);
                                    break;
                                 case 2:
                                     System.out.println("Enter a name: ");
                                     String name = sc.nextLine();
                                     user.addToCart(name ,user);
-
-                                case 3:
-                                    System.exit(0);
+                                    break;
+                                case 0:
+                                    check = 1;
+                                    break;
                             }
+
                         }
                     }else if(am.checkingAcc(a) && am.checkRole(a) == 1) {
                         while (true) {
