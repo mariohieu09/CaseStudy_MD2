@@ -10,7 +10,8 @@ public class UserAccount extends Account {
 
     public UserAccount(String accountName, String password) {
         super(accountName, password);
-        cart = new ShoppingCart();
+        this.cart = new ShoppingCart(super.getId());
+        this.Role = "User";
     }
 
     public ShoppingCart getCart() {
@@ -19,5 +20,11 @@ public class UserAccount extends Account {
 
     public void setCart(ShoppingCart cart) {
         this.cart = cart;
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        this.cart.setId(id);
     }
 }

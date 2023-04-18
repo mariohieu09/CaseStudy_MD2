@@ -2,10 +2,11 @@ package ShoppingCart;
 
 import ProductModel.Product;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     List<Product> list;
     private int id;
 
@@ -23,5 +24,13 @@ public class ShoppingCart {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Product> getList() {
+        return list;
+    }
+
+    public void setList(List<Product> list) {
+        this.list = list;
     }
 }
