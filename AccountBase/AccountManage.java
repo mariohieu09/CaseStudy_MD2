@@ -75,6 +75,5 @@ public class AccountManage {
         AccountManage ss = new AccountManage();
         ss.addAcc(role);
 
-
     }
 }

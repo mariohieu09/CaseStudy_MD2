@@ -1,8 +1,9 @@
 package ProductModel;
 
 public interface ProductManage {
-    void addProduct ();
-    void removeProduct ();
+    void addProduct (Product p);
+    void removeProduct (Product p);
+    void display(Product p);
 
 
 }

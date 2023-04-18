@@ -1,10 +1,13 @@
 package AccountBase;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Random;
 
 import ShoppingCart.ShoppingCart;
 public abstract class Account implements Serializable {
+
     protected String AccountName;
     protected String Password;
     protected int id;
