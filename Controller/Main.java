@@ -25,12 +25,12 @@ public class Main {
                 case 2:
                     Account a = am.SignIn();
                     if(am.checkingAcc(a) && am.checkRole(a) == 0){
-                        System.out.println("Dang nhap thanh cong!");
+                        System.out.println("Sign in success!");
                         int check = 0;
                         UserAccount user = new UserAccount(a.getAccountName(), a.getPassword());
                         while(check != 1){
                             ProductDisplay.display();
-                            System.out.println("\n1.Check gio hang \n2.Them vao gio hang \n3.Thanh toan \n0.Exit");
+                            System.out.println("\n1.Check the cart \n2.Adding new product \n3.Payment \n4.Search \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t){
@@ -46,6 +46,14 @@ public class Main {
                                     String name = sc.nextLine();
                                     user.addToCart(name ,user);
                                     break;
+                                case 3:
+                                    user.Payment(user);
+                                    break;
+                                case 4:
+                                    System.out.println("Enter the product name: ");
+                                    name = sc.nextLine();
+                                    ProductDisplay.searchProduct(name);
+                                    break;
                                 case 0:
                                     check = 1;
                                     break;
@@ -54,28 +62,33 @@ public class Main {
                         }
                     }else if(am.checkingAcc(a) && am.checkRole(a) == 1) {
                         int check = 0;
+                        System.out.println("Welcome!");
                         Seller sell = new Seller(a.getAccountName(), a.getPassword());
                         while (check != 1) {
                             ProductDisplay.display();
-                            System.out.println("Chao mung!");
-                            System.out.println("\n1.Them san pham \n2.Tang gia san pham \n3.Giam gia san pham \n4.Exit");
+                            System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t){
                                 case 1:
                                     System.out.println("Enter product name: ");
-                                    String name = sc.nextLine();
+                                    String Newname = sc.nextLine();
                                     System.out.println("Enter the price: ");
-                                    int price = sc.nextInt();
+                                    int Newprice = sc.nextInt();
                                     sc.nextLine();
                                     System.out.println("Enter the description: ");
-                                    String des = sc.nextLine();
-                                    Product prod = new Product(price, name, des);
-                                    sell.addProduct(prod);
+                                    String description = sc.nextLine();
+                                    Product prod = new Product(Newprice, Newname, description);
+                                    sell.addProduct(sell.getAccountName() ,prod);
                                     break;
                                 case 3:
-
+                                    System.out.println("Enter product name: ");
+                                    String name = sc.nextLine();
+                                    sell.coupon(sell.getAccountName(), name);
+                                    break;
                                 case 4:
+                                    sell.display(sell.getAccountName());
+                                case 0:
                                     check = 1;
                                     break;
 

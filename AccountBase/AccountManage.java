@@ -32,7 +32,7 @@ public class AccountManage {
 
     }
     public void Signup(){
-        System.out.println("Who do you want to sign up?   1.Sign up as User  2.Sign up as Seller");
+        System.out.println("Who do you want to sign up?   \n1.Sign up as User  \n2.Sign up as Seller");
         int choice = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter new acc name: ");
@@ -44,25 +44,25 @@ public class AccountManage {
             if (!checkingAcc(n)) {
                 addAcc(n);
             } else {
-                System.out.println("Da ton tai");
+                System.out.println("The Account name is already existed!");
             }
         }else if(choice == 2){
             Account n = new Seller(name, pass);
             if(!checkingAcc(n)){
                 addAcc(n);
             }else{
-                System.out.println("Da ton tai");
+                System.out.println("The Account name is already existed!");
             }
         }
 
     }
     public Account SignIn(){
         Account n;
-        System.out.println("Who do you want to sign in?    1.Sign in as guest  2.Sign in as User ");
+        System.out.println("Who do you want to sign in?    \n1.Sign in as guest  \n2.Sign in as User ");
         int choice = sc.nextInt();
         sc.nextLine();
         if(choice == 2) {
-            System.out.println("Enter acc name: ");
+            System.out.println("Enter account name: ");
             String name = sc.nextLine();
             System.out.println("Enter your password: ");
             String pass = sc.nextLine();

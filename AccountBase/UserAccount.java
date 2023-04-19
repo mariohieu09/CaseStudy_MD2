@@ -7,6 +7,7 @@ import ShoppingCart.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class UserAccount extends Account implements ShoppingCartManage {
@@ -99,5 +100,19 @@ public class UserAccount extends Account implements ShoppingCartManage {
             }
         }
         return null;
+    }
+
+    public void Payment(Account p){
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        Accounts = rf.readFile(DataBase);
+        for(Account a : Accounts){
+            if(a.getAccountName().equals(p.getAccountName()) && a.getPassword().equals(p.getPassword())){
+                list = ((UserAccount)a).getCart().getList();
+                list.removeAll(((UserAccount)a).getCart().getList());
+                break;
+            }
+        }
+        wf.writeFile(DataBase, Accounts);
     }
 }
