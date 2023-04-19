@@ -5,11 +5,13 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Random;
 
+
 import ShoppingCart.ShoppingCart;
 public abstract class Account implements Serializable {
     static final long serialVersionUID = -7034897190745766939L;
     protected String AccountName;
     protected String Password;
+
     protected int id;
     Random rd = new Random();
     protected String Role = "default";

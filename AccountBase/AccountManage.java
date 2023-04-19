@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AccountManage {
-    Scanner sc = new Scanner(System.in);
     List<Account> list = new ArrayList<>();
     File AccountStorage = new File("DataBase.txt");
     public boolean checkingAcc(Account acc){
@@ -32,6 +31,7 @@ public class AccountManage {
 
     }
     public void Signup(){
+        Scanner sc = new Scanner(System.in);
         System.out.println("Who do you want to sign up?   \n1.Sign up as User  \n2.Sign up as Seller");
         int choice = sc.nextInt();
         sc.nextLine();
@@ -57,6 +57,7 @@ public class AccountManage {
 
     }
     public Account SignIn(){
+        Scanner sc = new Scanner(System.in);
         Account n;
         System.out.println("Who do you want to sign in?    \n1.Sign in as guest  \n2.Sign in as User ");
         int choice = sc.nextInt();

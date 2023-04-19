@@ -10,11 +10,16 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Seller extends Account{
+    static final long serialVersionUID = -7034897190745766939L;
     File productStorage = new File("ProductList");
     File DataBase = new File("DataBase.txt");
-//    List<Product> list;
+
+
+    List<Product> list;
+
     SellerList listSeller;
     public Seller(String accountName, String password) {
         super(accountName, password);
@@ -88,42 +93,48 @@ public class Seller extends Account{
         for(Account a : Accounts){
             if(a.getAccountName().equals(sellerName)){
                 Owner_Sell = ((Seller)a).getListSeller().getList();
-                System.out.println(Owner_Sell);
+                System.out.println("Here is your list of selling product: ");
+                Owner_Sell.forEach(System.out::println);
+                System.out.println("------------------------------------");
                 break;
             }
         }
     }
 
-    public void coupon(String SellerName,String name){
+    public boolean coupon(String SellerName,String productName){
+        boolean isTrue = false;
+        Scanner sc = new Scanner(System.in);
         ReadFile rf = new ReadFile();
         List<Account> Accounts = rf.readFile(DataBase);
         List<Product> list;
         list = rf.readFile(productStorage);
+        System.out.println("Enter the percent you want to decrease: ");
+        int percent = sc.nextInt();
+        sc.nextLine();
         for(Account a : Accounts){
             if(a.getAccountName().equals(SellerName)){
                 for(Product t : ((Seller)a).getListSeller().getList()){
-                    if(t.getName().equals(name)){
+                    if(t.getName().equals(productName)){
                         double currentPrice = t.getPrice();
-                        double afterCoupon = currentPrice - (currentPrice * 20/100);
+                        double afterCoupon = currentPrice - (currentPrice * percent/100);
                         t.setPrice(afterCoupon);
-                        System.out.println("Success!");
+                        for(Product n : list){
+                            if(n.getName().equals(productName)){
+                                n.setPrice(afterCoupon);
+                                isTrue = true;
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
             }
         }
-        for(Product t : list){
-            if(t.getName().equals(name)){
-                double currentPrice = t.getPrice();
-                double afterCoupon = currentPrice - (currentPrice * 20/100);
-                t.setPrice(afterCoupon);
-                System.out.println("Success!");
-                break;
-            }
-        }
+
         WriteFile wf = new WriteFile();
         wf.writeFile(productStorage, list);
         wf.writeFile(DataBase, Accounts);
+        return isTrue;
     }
     public Product searchProduct(String name){
         ReadFile rf = new ReadFile();
@@ -150,5 +161,41 @@ public class Seller extends Account{
             }
         }
         return false;
+    }
+    public boolean increasePrice(String SellerName, String productName){
+        Scanner sc = new Scanner(System.in);
+        boolean isTrue = false;
+        ReadFile rf = new ReadFile();
+        List<Account> Accounts = rf.readFile(DataBase);
+        List<Product> list;
+        list = rf.readFile(productStorage);
+        System.out.println("Enter the percent you want to increase: ");
+        int percent = sc.nextInt();
+        sc.nextLine();
+        for(Account a : Accounts){
+            if(a.getAccountName().equals(SellerName)){
+                for(Product t : ((Seller)a).getListSeller().getList()){
+                    if(t.getName().equals(productName)){
+                        double currentPrice = t.getPrice();
+                        double afterCoupon = currentPrice + (currentPrice * percent/100);
+                        t.setPrice(afterCoupon);
+                        for(Product n : list){
+                            if(n.getName().equals(productName)){
+                                double crP = n.getPrice();
+                                double afP = crP + (crP * percent/100);
+                                n.setPrice(afP);
+                                isTrue = true;
+                                break;
+                                }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        WriteFile wf = new WriteFile();
+        wf.writeFile(productStorage, list);
+        wf.writeFile(DataBase, Accounts);
+        return isTrue;
     }
 }

@@ -1,11 +1,11 @@
 package ProductModel;
 
+import AccountBase.Account;
 import FileIO.ReadFile;
 import FileIO.WriteFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ProductDisplay {
     public static void display() {
@@ -31,6 +31,23 @@ public class ProductDisplay {
             System.out.println("Can't not find the product");
         }else{
             System.out.println(temp);
+            System.out.println("------------------------------------");
         }
+    }
+    public static void SortByName(){
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        File productStorage = new File("ProductList");
+        List<Product> list = rf.readFile(productStorage);
+        Collections.sort(list, Comparator.comparing(Product::getName));
+        wf.writeFile(productStorage, list);
+    }
+    public static void SortByPrice(){
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        File productStorage = new File("ProductList");
+        List<Product> list = rf.readFile(productStorage);
+        Collections.sort(list, Comparator.comparing(Product::getPrice));
+        wf.writeFile(productStorage, list);
     }
 }

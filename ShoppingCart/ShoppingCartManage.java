@@ -19,5 +19,5 @@ public interface ShoppingCartManage {
     public void display(Account p, String name);
 
     public void addToCart(String name, UserAccount acc);
-    void Payment(Account p);
+    void Payment(Account p, String haveTopay);
 }

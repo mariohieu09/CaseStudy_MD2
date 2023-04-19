@@ -1,10 +1,11 @@
 package ProductModel;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 public class Product implements Serializable {
     static final long serialVersionUID = -7034897190745766939L;
-    private int id;
+    private static int id = 0;
     private double price;
     private String name;
     private String description;
@@ -14,6 +15,7 @@ public class Product implements Serializable {
         this.price = price;
         this.name = name;
         this.description = description;
+        id++;
     }
 
     public Product(double price, String name, String description, String type) {
@@ -65,9 +67,8 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "Name='" + name + '\'' +
                 ", price=" + price +
-                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
