@@ -32,30 +32,54 @@ public class AccountManage {
 
     }
     public void Signup(){
+        System.out.println("Who do you want to sign up?   1.Sign up as User  2.Sign up as Seller");
+        int choice = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter new acc name: ");
         String name = sc.nextLine();
         System.out.println("Enter new password: ");
         String pass = sc.nextLine();
-        Account n = new UserAccount(name, pass);
-        if(!checkingAcc(n)){
-            addAcc(n);
-        }else{
-            System.out.println("Da ton tai");
+        if(choice == 1) {
+            Account n = new UserAccount(name, pass);
+            if (!checkingAcc(n)) {
+                addAcc(n);
+            } else {
+                System.out.println("Da ton tai");
+            }
+        }else if(choice == 2){
+            Account n = new Seller(name, pass);
+            if(!checkingAcc(n)){
+                addAcc(n);
+            }else{
+                System.out.println("Da ton tai");
+            }
         }
 
     }
     public Account SignIn(){
-        System.out.println("Enter acc name: ");
-        String name = sc.nextLine();
-        System.out.println("Enter your password: ");
-        String pass = sc.nextLine();
-        Account n = new UserAccount(name,pass);
-        return n;
+        Account n;
+        System.out.println("Who do you want to sign in?    1.Sign in as guest  2.Sign in as User ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        if(choice == 2) {
+            System.out.println("Enter acc name: ");
+            String name = sc.nextLine();
+            System.out.println("Enter your password: ");
+            String pass = sc.nextLine();
+            n = new UserAccount(name, pass);
+            return n;
+        }else{
+            n = new GuestAccount();
+            return n;
+        }
     }
     public int checkRole(Account a){
         ReadFile rf = new ReadFile();
         list = rf.readFile(AccountStorage);
-        String Rolie = "Default";
+        String Rolie = "Guest";
+        if(a.getPassword().equals("") && a.getAccountName().equals("")){
+            return 2;
+        }
         for(Account p : list){
             if(a.getAccountName().equals(p.getAccountName()) && a.getPassword().equals(p.getPassword())){
                 Rolie = p.getRole();
@@ -67,10 +91,7 @@ public class AccountManage {
         } else if (Rolie.equals("Seller")) {
             return 1;
         }else{
-            return 2;
+            return -1;
         }
     }
-
-
-
 }
