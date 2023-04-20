@@ -11,5 +11,4 @@ public class MainTest {
         String[] s = new String[10];
         Main.main(s);
     }
-
 }

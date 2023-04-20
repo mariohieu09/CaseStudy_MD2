@@ -173,6 +173,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
                 double currentAmount = ((UserAccount) t).getWallet().getAmount();
                 currentAmount += amount;
                 ((UserAccount) t).getWallet().setAmount(currentAmount);
+                System.out.println("Your transaction is success! Your current amount: " + currentAmount);
                 break;
             }
         }
