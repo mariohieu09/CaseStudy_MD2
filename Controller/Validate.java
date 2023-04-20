@@ -10,6 +10,7 @@ public class Validate {
     private static final String CILENT_VALIDATE = "^[1230]$";
     private static final String LIST_SELLER_VALIDATE = "^[12340]$";
     private static final String LIST_SORTING_VALIDATE = "^[12]$";
+    private static final String SIGN_UP_VALIDATE = "^[a-z0-9]{6,}$";
     public static boolean choiceValidate(String choice){
         Pattern pattern = Pattern.compile(CHOICE_VALIDATE);
         boolean isMatch = pattern.matcher(choice).matches();
@@ -35,5 +36,9 @@ public class Validate {
         boolean isMatch = pattern.matcher(choice).matches();
         return isMatch;
     }
-
+    public static boolean SignUpValidate(String name){
+        Pattern pattern = Pattern.compile(SIGN_UP_VALIDATE);
+        boolean isMatch = pattern.matcher(name).matches();
+        return isMatch;
+    }
 }

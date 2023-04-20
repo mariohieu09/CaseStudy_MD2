@@ -1,6 +1,7 @@
 package AccountBase;
 
 import AccountBase.Account;
+import Controller.Validate;
 import FileIO.ReadFile;
 import FileIO.WriteFile;
 
@@ -37,6 +38,10 @@ public class AccountManage {
         sc.nextLine();
         System.out.println("Enter new acc name: ");
         String name = sc.nextLine();
+        do{
+            System.out.println("Plase enter a name with a 6 character long: ");
+            name = sc.nextLine();
+        }while (!Validate.SignUpValidate(name));
         System.out.println("Enter new password: ");
         String pass = sc.nextLine();
         if(choice == 1) {
