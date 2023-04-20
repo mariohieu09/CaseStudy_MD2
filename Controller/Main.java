@@ -20,9 +20,9 @@ public class Main {
                 int choice;
                 String choi;
                 do {
-                    System.out.println("Enter choice:  \n1.Sign up \n2.Sign in \n3.Exit");
+                    System.out.println("Enter choice:  \n1.Sign up \n2.Sign in \n3.Forget Password? \n0.Exit");
                     choi =  sc.nextLine();
-                }while (!Validate.choiceValidate(choi));
+                }while (!Validate.CilentValidate(choi));
                 choice = (int)choi.charAt(0) - 48;
             switch (choice) {
                 case 1 -> am.Signup();
@@ -210,7 +210,8 @@ public class Main {
                         System.out.println("The Account is not exist!");
                     }
                 }
-                case 3 -> System.exit(1);
+                case 3 -> am.passWordForget();
+                case 0 -> System.exit(0);
             }
             }
 

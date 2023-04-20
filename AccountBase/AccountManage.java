@@ -95,4 +95,27 @@ public class AccountManage {
             return -1;
         }
     }
+    public void passWordForget(){
+        Scanner sc = new Scanner(System.in);
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        list = rf.readFile(AccountStorage);
+        System.out.println("Enter your account name: ");
+        String name = sc.nextLine();
+        Account p = list.stream().filter(x -> x.getAccountName().equals(name)).findAny().orElse(new Account() {
+        });
+        if(p.getRole().equals("default")){
+            System.out.println("Can't not find the account.");
+        }else{
+            for(Account account : list){
+                if(account.getAccountName().equals(name)){
+                    System.out.println("Enter new password: ");
+                    String newPassWord = sc.nextLine();
+                    account.setPassword(newPassWord);
+                    break;
+                }
+            }
+        }
+        wf.writeFile(AccountStorage, list);
+    }
 }
