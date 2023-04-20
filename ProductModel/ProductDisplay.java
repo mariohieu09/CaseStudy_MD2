@@ -42,14 +42,20 @@ public class ProductDisplay {
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getName));
-        list.forEach(System.out::println);
+        for(Product product : list){
+            System.out.println(product);
+            QuantityDisplay(product);
+        }
     }
     public static void SortByPrice(){
         ReadFile rf = new ReadFile();
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getPrice));
-        list.forEach(System.out::println);
+        for(Product product : list){
+            System.out.println(product);
+            QuantityDisplay(product);
+        }
     }
     private static void QuantityDisplay(Product product){
         ReadFile rf = new ReadFile();

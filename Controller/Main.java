@@ -28,9 +28,9 @@ public class Main {
                         System.out.println("Sign in success!");
                         int check = 0;
                         UserAccount user = new UserAccount(a.getAccountName(), a.getPassword());
+                        ProductDisplay.display();
                         while (check != 1) {
-                            ProductDisplay.display();
-                            System.out.println("\n1.Check the cart \n2.Adding new product \n3.Payment \n4.Search \n5.Sort the List \n6.Deposit the amount \n0.Exit");
+                            System.out.println("\n1.Check the cart \n2.Adding new product \n3.Payment \n4.Search \n5.Sort the List \n6.Deposit the amount \n7.Display the invoice history \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t) {
@@ -53,7 +53,11 @@ public class Main {
                                     name = sc.nextLine();
                                     if(user.checkTheQuantity(name)){
                                         user.reduceQuantity(name);
-                                        user.Payment(user,name);
+                                       boolean beenPaid =  user.exchange(user, name);
+                                       if(beenPaid){
+                                           user.addPaidcheck(user, name);
+                                           user.getPaidmentcheck(user, name);
+                                       }
                                     }else{
                                         System.out.println("The quantity is not enough!");
                                     }
@@ -68,13 +72,18 @@ public class Main {
                                     int n = sc.nextInt();
                                     sc.nextLine();
                                     if (n == 1) {
+                                        System.out.println("Product List: ");
                                         ProductDisplay.SortByName();
                                     } else {
+                                        System.out.println("Product List: ");
                                         ProductDisplay.SortByPrice();
                                     }
                                     break;
                                 case 6:
                                     user.deposit(user);
+                                    break;
+                                case 7:
+                                    user.eInvoiceDisplay(user);
                                     break;
                                 case 0:
                                     check = 1;
@@ -85,9 +94,9 @@ public class Main {
                         int check = 0;
                         System.out.println("Welcome!");
                         Seller sell = new Seller(a.getAccountName(), a.getPassword());
+                        System.out.println("Product List: ");
                         ProductDisplay.display();
                         while (check != 1) {
-                            System.out.println("Product List: ");
                             System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n5.Sort the list \n6.Display the amount \n7.Reduce Quantity \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();

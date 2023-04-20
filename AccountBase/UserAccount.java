@@ -4,6 +4,7 @@ import FileIO.ReadFile;
 import FileIO.WriteFile;
 import ProductModel.Product;
 import ShoppingCart.*;
+import eInvoice.*;
 import eWallet.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserAccount extends Account implements ShoppingCartManage,eWalletManage {
+public class UserAccount extends Account implements ShoppingCartManage,eWalletManage, eInvoiceManage {
     List<Product> list = new ArrayList<>();
-    List<Account> Accounts = new ArrayList<>();
     File ProductStorage = new File("ProductList");
     File DataBase = new File("DataBase.txt");
+    List<eInvoice> invoiceList;
     public ShoppingCart cart;
     public eWallet wallet;
     static final long serialVersionUID = -7034897190745766939L;
@@ -31,11 +32,20 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         this.wallet = wallet;
     }
 
+    public List<eInvoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<eInvoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
     public UserAccount(String accountName, String password) {
         super(accountName, password);
         this.cart = new ShoppingCart(super.getId());
         this.Role = "User";
         this.wallet = new eWallet();
+        this.invoiceList = new ArrayList<eInvoice>();
     }
 
     public ShoppingCart getCart() {
@@ -63,6 +73,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
 
     public void display(Account p, String name) {
         ReadFile rf = new ReadFile();
+        List<Account> Accounts = new ArrayList<>();
         Accounts = rf.readFile(DataBase);
         for (Account s : Accounts) {
             if (s.getAccountName().equals(p.getAccountName()) && s.getPassword().equals(p.getPassword())) {
@@ -88,6 +99,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
 
     public void addToCart(String name, UserAccount acc) {
         ReadFile rf = new ReadFile();
+        List<Account> Accounts = new ArrayList<>();
         Accounts = rf.readFile(DataBase);
         Product p = getProd(name);
         for (Account a : Accounts) {
@@ -118,6 +130,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         boolean beenPaid = false;
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
+        List<Account> Accounts = new ArrayList<>();
         Accounts = rf.readFile(DataBase);
         for (Account a : Accounts) {
             if (p.getAccountName().equals(a.getAccountName())) {
@@ -147,6 +160,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
 
     @Override
     public void deposit(Account p) {
+        List<Account> Accounts = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the amount you want to deposit: ");
         double amount = sc.nextDouble();
@@ -166,6 +180,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
     }
 
     public void eWalletDisplay(Account p) {
+        List<Account> Accounts = new ArrayList<>();
         double currentAmount = 0;
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
@@ -180,6 +195,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
     }
 
     public boolean exchange(Account p, String name) {
+        List<Account> Accounts = new ArrayList<>();
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
         boolean confirm = false;
@@ -238,5 +254,49 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
             }
         }
         return yesItCan;
+    }
+
+    @Override
+    public void eInvoiceDisplay(Account p) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        List<Account> Accounts;
+        Accounts = rf.readFile(DataBase);
+        for(Account account : Accounts){
+            if(account.getAccountName().equals(p.getAccountName())){
+                invoiceList = ((UserAccount)account).getInvoiceList();
+                invoiceList.forEach(System.out::println);
+                break;
+            }
+        }
+    }
+    public void getPaidmentcheck(Account p, String name){
+        System.out.println(new eInvoice(p.getAccountName(), name));
+    }
+
+    @Override
+    public void addPaidcheck(Account p, String name) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        List<Account> Accounts;
+        Accounts = rf.readFile(DataBase);
+        for(Account account : Accounts){
+            if(p.getAccountName().equals(account.getAccountName())){
+                invoiceList = ((UserAccount)account).getInvoiceList();
+                invoiceList.add(new eInvoice(p.getAccountName(), name));
+                ((UserAccount)account).setInvoiceList(invoiceList);
+                break;
+            }
+        }
+        wf.writeFile(DataBase, Accounts);
+    }
+
+    @Override
+    public void sortThePaidcheck(Account p) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        List<Account> Accounts;
+        Accounts = rf.readFile(DataBase);
+
     }
 }
