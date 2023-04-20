@@ -88,7 +88,7 @@ public class Main {
                         ProductDisplay.display();
                         while (check != 1) {
                             System.out.println("Product List: ");
-                            System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n5.Sort the list \n6.Display the amount \n0.Exit");
+                            System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n5.Sort the list \n6.Display the amount \n7.Reduce Quantity \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t) {
@@ -100,7 +100,10 @@ public class Main {
                                     sc.nextLine();
                                     System.out.println("Enter the description: ");
                                     String description = sc.nextLine();
-                                    Product prod = new Product(Newprice, Newname, description);
+                                    System.out.println("Enter the quantity you want to sell: ");
+                                    int quantity = sc.nextInt();
+                                    sc.nextLine();
+                                    Product prod = new Product(Newprice, Newname, description, quantity);
                                     sell.addProduct(sell.getAccountName(), prod);
                                     break;
                                 case 2:
@@ -138,6 +141,14 @@ public class Main {
                                     break;
                                 case 6:
                                     sell.eWalletDisplay(sell);
+                                    break;
+                                case 7:
+                                    System.out.println("Enter the name of the product: ");
+                                    name = sc.nextLine();
+                                    System.out.println("Enter the quantity you want to reduce: ");
+                                    quantity = sc.nextInt();
+                                    sc.nextLine();
+                                    sell.setQuantity(sell, name, quantity);
                                     break;
                                 case 0:
                                     check = 1;

@@ -250,6 +250,7 @@ public class Seller extends Account implements ProductManage{
                 if(product.getName().equals(name)){
                     int currentQuantity = product.getQuantity();
                     product.setQuantity(currentQuantity + quantity);
+                    System.out.println("Success!");
                     break;
                 }
             }

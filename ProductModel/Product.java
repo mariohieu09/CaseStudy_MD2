@@ -11,11 +11,11 @@ public class Product implements Serializable {
     private String description;
     protected String type;
 
-    public Product(int price, String name, String description) {
+    public Product(int price, String name, String description, int quantity) {
         this.price = price;
         this.name = name;
         this.description = description;
-        quantity = 1;
+        this.quantity = quantity;
     }
 
     public Product(double price, String name, String description, String type) {
