@@ -46,18 +46,17 @@ public class Main {
                                     user.display(user, "");
                                     System.out.println("------------------------------------");
                                     do {
-                                        System.out.println("1.Payment                     2.Deposit the amount                 3.Back to menu");
+                                        System.out.println("1.Payment                2.Deposit the amount          3.Remove product      0.Back to menu");
                                         choi = sc.nextLine();
-                                    }while (!Validate.choiceValidate(choi));
+                                    }while (!Validate.CartValidate(choi));
                                     int z = (int)choi.charAt(0) - 48;
                                     if (z == 1) {
                                         System.out.println("Enter the product name: ");
                                         String name = sc.nextLine();
                                         if (user.checkTheQuantity(name)) {
                                             user.reduceQuantity(name);
-                                            boolean beenPaid = user.Payment(user, name);
+                                            boolean beenPaid = user.exchange(user, name);
                                             if (beenPaid) {
-                                                user.exchange(user, name);
                                                 user.addPaidcheck(user, name);
                                                 user.getPaidmentcheck(user, name);
                                             }
@@ -66,7 +65,11 @@ public class Main {
                                         }
                                     } else if (z == 2) {
                                         user.deposit(user);
-                                    } else {
+                                    } else if(z == 3){
+                                        System.out.println("Enter the product name: ");
+                                        String name = sc.nextLine();
+                                        user.removeProd(user,name);
+                                    }else{
                                         break;
                                     }
                                     break;

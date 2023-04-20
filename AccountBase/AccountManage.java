@@ -36,10 +36,9 @@ public class AccountManage {
         System.out.println("Who do you want to sign up?   \n1.Sign up as User  \n2.Sign up as Seller");
         int choice = sc.nextInt();
         sc.nextLine();
-        System.out.println("Enter new acc name: ");
-        String name = sc.nextLine();
+        String name;
         do{
-            System.out.println("Plase enter a name with a 6 character long: ");
+            System.out.println("Enter new acc name (6 character long): ");
             name = sc.nextLine();
         }while (!Validate.SignUpValidate(name));
         System.out.println("Enter new password: ");

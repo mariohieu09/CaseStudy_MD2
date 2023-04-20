@@ -7,10 +7,7 @@ import ShoppingCart.*;
 import eInvoice.*;
 import eWallet.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserAccount extends Account implements ShoppingCartManage,eWalletManage, eInvoiceManage {
     List<Product> list = new ArrayList<>();
@@ -62,12 +59,29 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         this.cart.setId(id);
     }
 
-    public void removeProd(Product p) {
+    public void removeProd(Account p ,String name) {
         ReadFile rf = new ReadFile();
-        list = rf.readFile(ProductStorage);
-        list.remove(p);
+        List<Account> Accounts;
+        Accounts = rf.readFile(DataBase);
+        boolean isRemove = false;
+        for(Account account : Accounts){
+            if(p.getAccountName().equals(account.getAccountName())){
+                for(Product product : ((UserAccount)account).getCart().getList()){
+                    if(product.getName().equals(name)){
+                        ((UserAccount)account).getCart().getList().remove(product);
+                        isRemove = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if(isRemove){
+            System.out.println("Remove success!");
+        }else{
+            System.out.println("Can't find the product!");
+        }
         WriteFile wf = new WriteFile();
-        wf.writeFile(ProductStorage, list);
+        wf.writeFile(DataBase, Accounts);
     }
 
 
@@ -144,12 +158,10 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
                             System.out.println("The product have been paid!");
                             wf.writeFile(DataBase, Accounts);
                             beenPaid = true;
-                            return beenPaid;
+                            break;
                         } else {
                             System.out.println("The amount is not able to pay the price. Please deposit the money!");
-                            beenPaid = false;
                             wf.writeFile(DataBase, Accounts);
-                            return beenPaid;
                         }
                     }
                 }
@@ -298,6 +310,15 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         WriteFile wf = new WriteFile();
         List<Account> Accounts;
         Accounts = rf.readFile(DataBase);
-
+        for(Account account : Accounts){
+            if(account.getAccountName().equals(p.getAccountName())){
+                invoiceList = ((UserAccount)account).getInvoiceList();
+                break;
+            }
+        }
+        Collections.sort(invoiceList, Comparator.comparing(eInvoice::getPaidDate));
+        invoiceList.forEach(System.out::println);
     }
+
+
 }
