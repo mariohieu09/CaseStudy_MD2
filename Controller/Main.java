@@ -51,7 +51,12 @@ public class Main {
                                 case 3:
                                     System.out.println("Enter the product name: ");
                                     name = sc.nextLine();
-                                    user.exchange(user,name);
+                                    if(user.checkTheQuantity(name)){
+                                        user.reduceQuantity(name);
+                                        user.Payment(user,name);
+                                    }else{
+                                        System.out.println("The quantity is not enough!");
+                                    }
                                     break;
                                 case 4:
                                     System.out.println("Enter the product name: ");
@@ -163,8 +168,8 @@ public class Main {
                         }
                     }else{
                         System.out.println("The Account is not exist!");
-                        break;
                     }
+                    break;
                 case 3:
                     System.exit(1);
             }

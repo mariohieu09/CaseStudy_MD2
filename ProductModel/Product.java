@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 public class Product implements Serializable {
     static final long serialVersionUID = -7034897190745766939L;
-    private static int id = 0;
+    private  int quantity = 0;
     private double price;
     private String name;
     private String description;
@@ -15,7 +15,7 @@ public class Product implements Serializable {
         this.price = price;
         this.name = name;
         this.description = description;
-        id++;
+        quantity = 1;
     }
 
     public Product(double price, String name, String description, String type) {
@@ -32,12 +32,12 @@ public class Product implements Serializable {
         this.type = "";
     }
 
-    public int getId() {
-        return id;
+    public  int getQuantity() {
+        return quantity;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public  void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPrice() {

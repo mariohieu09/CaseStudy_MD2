@@ -52,7 +52,7 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         this.cart.setId(id);
     }
 
-    public void removeProd(Product p){
+    public void removeProd(Product p) {
         ReadFile rf = new ReadFile();
         list = rf.readFile(ProductStorage);
         list.remove(p);
@@ -61,24 +61,24 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
     }
 
 
-   public void display(Account p, String name){
-       ReadFile rf = new ReadFile();
+    public void display(Account p, String name) {
+        ReadFile rf = new ReadFile();
         Accounts = rf.readFile(DataBase);
-        for(Account s : Accounts){
-            if(s.getAccountName().equals(p.getAccountName()) && s.getPassword().equals(p.getPassword())){
-                list = ((UserAccount)s).getCart().getList();
-               if(name.equals("")){
-                   for(Product d : list ){
-                       System.out.println(d);
-                   }
-               }else{
-                   for(Product d : list){
-                       if(d.getName().equals(name)){
-                           System.out.println(d);
-                           break;
-                       }
-                   }
-               }
+        for (Account s : Accounts) {
+            if (s.getAccountName().equals(p.getAccountName()) && s.getPassword().equals(p.getPassword())) {
+                list = ((UserAccount) s).getCart().getList();
+                if (name.equals("")) {
+                    for (Product d : list) {
+                        System.out.println(d);
+                    }
+                } else {
+                    for (Product d : list) {
+                        if (d.getName().equals(name)) {
+                            System.out.println(d);
+                            break;
+                        }
+                    }
+                }
 
             }
         }
@@ -86,13 +86,12 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
     }
 
 
-
     public void addToCart(String name, UserAccount acc) {
         ReadFile rf = new ReadFile();
         Accounts = rf.readFile(DataBase);
         Product p = getProd(name);
-        for(Account a : Accounts){
-            if(a.getAccountName().equals(acc.getAccountName()) && a.getPassword().equals(a.getPassword())){
+        for (Account a : Accounts) {
+            if (a.getAccountName().equals(acc.getAccountName()) && a.getPassword().equals(a.getPassword())) {
                 acc = (UserAccount) a;
                 list = acc.getCart().getList();
                 list.add(p);
@@ -103,23 +102,24 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         WriteFile wf = new WriteFile();
         wf.writeFile(DataBase, Accounts);
     }
-    private Product getProd(String name){
+
+    private Product getProd(String name) {
         ReadFile rf = new ReadFile();
         list = rf.readFile(ProductStorage);
-        for(Product t : list){
-            if(t.getName().equals(name)){
+        for (Product t : list) {
+            if (t.getName().equals(name)) {
                 return t;
             }
         }
         return null;
     }
 
-    public boolean Payment(Account p, String haveToPay){
+    public boolean Payment(Account p, String haveToPay) {
         boolean beenPaid = false;
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
         Accounts = rf.readFile(DataBase);
-        for(Account a : Accounts) {
+        for (Account a : Accounts) {
             if (p.getAccountName().equals(a.getAccountName())) {
                 for (Product s : ((UserAccount) a).getCart().getList()) {
                     if (s.getName().equals(haveToPay)) {
@@ -154,52 +154,89 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
         Accounts = rf.readFile(DataBase);
-        for(Account t : Accounts){
-            if(t.getAccountName().equals(p.getAccountName()) && t.getPassword().equals(p.getPassword())){
-                double currentAmount = ((UserAccount)t).getWallet().getAmount();
+        for (Account t : Accounts) {
+            if (t.getAccountName().equals(p.getAccountName()) && t.getPassword().equals(p.getPassword())) {
+                double currentAmount = ((UserAccount) t).getWallet().getAmount();
                 currentAmount += amount;
-                ((UserAccount)t).getWallet().setAmount(currentAmount);
+                ((UserAccount) t).getWallet().setAmount(currentAmount);
                 break;
             }
         }
         wf.writeFile(DataBase, Accounts);
     }
-    public void eWalletDisplay(Account p){
+
+    public void eWalletDisplay(Account p) {
         double currentAmount = 0;
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
         Accounts = rf.readFile(DataBase);
-        for(Account a : Accounts){
-            if(a.getAccountName().equals(p.getAccountName())){
-                currentAmount = ((UserAccount)a).getWallet().getAmount();
+        for (Account a : Accounts) {
+            if (a.getAccountName().equals(p.getAccountName())) {
+                currentAmount = ((UserAccount) a).getWallet().getAmount();
                 System.out.println(currentAmount);
                 break;
             }
         }
     }
-    public void exchange(Account p, String name){
+
+    public boolean exchange(Account p, String name) {
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
+        boolean confirm = false;
         Accounts = rf.readFile(DataBase);
         AccountManage am = new AccountManage();
         boolean hasBeenPaid = Payment(p, name);
-        if(hasBeenPaid){
-            for(Account a : Accounts){
-                if(am.checkRole(a) == 1){
-                    for(Product prod : ((Seller)a).getListSeller().getList()){
-                        if(prod.getName().equals(name)){
-                            double currentAmount = ((Seller)a).geteWallet().getAmount();
+        if (hasBeenPaid) {
+            for (Account a : Accounts) {
+                if (am.checkRole(a) == 1) {
+                    for (Product prod : ((Seller) a).getListSeller().getList()) {
+                        if (prod.getName().equals(name)) {
+                            double currentAmount = ((Seller) a).geteWallet().getAmount();
                             currentAmount += prod.getPrice();
-                            ((Seller)a).geteWallet().setAmount(currentAmount);
+                            ((Seller) a).geteWallet().setAmount(currentAmount);
                             System.out.println("Success!");
+                            confirm = true;
                             break;
                         }
                     }
                 }
-                }
             }
-        wf.writeFile(DataBase, Accounts);
         }
+        wf.writeFile(DataBase, Accounts);
+        return confirm;
     }
 
+    public void reduceQuantity(String haveTopay) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        boolean canReduce = false;
+        list = rf.readFile(ProductStorage);
+        if(checkTheQuantity(haveTopay)){
+            for(Product product : list){
+                if(product.getName().equals(haveTopay)){
+                    int current = product.getQuantity();
+                    product.setQuantity(current - 1);
+                    canReduce = true;
+                    break;
+                }
+            }
+        }
+        wf.writeFile(ProductStorage, list);
+    }
 
+    public boolean checkTheQuantity(String name) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        boolean yesItCan = false;
+        list = rf.readFile(ProductStorage);
+        for (Product product : list) {
+            if (product.getName().equals(name)) {
+                if (product.getQuantity() > 0) {
+                    yesItCan = true;
+                    break;
+                }
+            }
+        }
+        return yesItCan;
+    }
+}

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Seller extends Account {
+public class Seller extends Account implements ProductManage{
     static final long serialVersionUID = -7034897190745766939L;
     File productStorage = new File("ProductList");
     File DataBase = new File("DataBase.txt");
@@ -225,5 +225,35 @@ public class Seller extends Account {
                 break;
             }
         }
+    }
+
+    @Override
+    public void setQuantity(Account p, String name,int quantity) {
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        boolean existed = false;
+        List<Account> Accounts = new ArrayList<>();
+        Accounts = rf.readFile(DataBase);
+        list = rf.readFile(productStorage);
+        for(Account account : Accounts) {
+            if (account.getAccountName().equals(p.getAccountName())) {
+                for (Product product : ((Seller) account).getListSeller().getList()) {
+                    if (product.getName().equals(name)) {
+                        existed = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if(existed){
+            for(Product product : list){
+                if(product.getName().equals(name)){
+                    int currentQuantity = product.getQuantity();
+                    product.setQuantity(currentQuantity + quantity);
+                    break;
+                }
+            }
+        }
+        wf.writeFile(productStorage, list);
     }
 }

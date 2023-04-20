@@ -12,7 +12,10 @@ public class ProductDisplay {
         File productList = new File("ProductList");
         ReadFile rf = new ReadFile();
         List<Product> list = rf.readFile(productList);
-        list.forEach(System.out::println);
+        for(Product product : list){
+            System.out.println(product);
+            QuantityDisplay(product);
+        }
     }
     public static void searchProduct(String name){
         ReadFile rf = new ReadFile();
@@ -36,7 +39,6 @@ public class ProductDisplay {
     }
     public static void SortByName(){
         ReadFile rf = new ReadFile();
-        WriteFile wf = new WriteFile();
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getName));
@@ -44,10 +46,20 @@ public class ProductDisplay {
     }
     public static void SortByPrice(){
         ReadFile rf = new ReadFile();
-        WriteFile wf = new WriteFile();
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getPrice));
         list.forEach(System.out::println);
+    }
+    private static void QuantityDisplay(Product product){
+        ReadFile rf = new ReadFile();
+        File productStorage = new File("ProductList");
+        List<Product> list = rf.readFile(productStorage);
+        for(Product product1 : list){
+            if(product1.getName().equals(product.getName())){
+                System.out.println("Quantity: " + product1.getQuantity());
+                break;
+            }
+        }
     }
 }
