@@ -40,7 +40,7 @@ public class ProductDisplay {
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getName));
-        wf.writeFile(productStorage, list);
+        list.forEach(System.out::println);
     }
     public static void SortByPrice(){
         ReadFile rf = new ReadFile();
@@ -48,6 +48,6 @@ public class ProductDisplay {
         File productStorage = new File("ProductList");
         List<Product> list = rf.readFile(productStorage);
         Collections.sort(list, Comparator.comparing(Product::getPrice));
-        wf.writeFile(productStorage, list);
+        list.forEach(System.out::println);
     }
 }

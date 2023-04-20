@@ -51,7 +51,7 @@ public class Main {
                                 case 3:
                                     System.out.println("Enter the product name: ");
                                     name = sc.nextLine();
-                                    user.Payment(user, name);
+                                    user.exchange(user,name);
                                     break;
                                 case 4:
                                     System.out.println("Enter the product name: ");
@@ -80,10 +80,10 @@ public class Main {
                         int check = 0;
                         System.out.println("Welcome!");
                         Seller sell = new Seller(a.getAccountName(), a.getPassword());
+                        ProductDisplay.display();
                         while (check != 1) {
                             System.out.println("Product List: ");
-                            ProductDisplay.display();
-                            System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n5.Sort the list  \n0.Exit");
+                            System.out.println("\n1.Adding new product \n2.Increase the price \n3.Coupon \n4.Display the Sell list \n5.Sort the list \n6.Display the amount \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t) {
@@ -131,6 +131,9 @@ public class Main {
                                         ProductDisplay.SortByPrice();
                                     }
                                     break;
+                                case 6:
+                                    sell.eWalletDisplay(sell);
+                                    break;
                                 case 0:
                                     check = 1;
                             }
@@ -151,10 +154,8 @@ public class Main {
                                 sc.nextLine();
                                 if (n == 1) {
                                     ProductDisplay.SortByName();
-                                    ProductDisplay.display();
                                 } else {
                                     ProductDisplay.SortByPrice();
-                                    ProductDisplay.display();
                                 }
                             }else{
                                 check = 1;

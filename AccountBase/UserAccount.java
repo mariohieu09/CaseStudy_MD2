@@ -114,7 +114,8 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
         return null;
     }
 
-    public void Payment(Account p, String haveToPay){
+    public boolean Payment(Account p, String haveToPay){
+        boolean beenPaid = false;
         ReadFile rf = new ReadFile();
         WriteFile wf = new WriteFile();
         Accounts = rf.readFile(DataBase);
@@ -128,16 +129,20 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
                             double afterPay = currentAmount - s.getPrice();
                             ((UserAccount) a).getWallet().setAmount(afterPay);
                             System.out.println("The product have been paid!");
-                            break;
+                            wf.writeFile(DataBase, Accounts);
+                            beenPaid = true;
+                            return beenPaid;
                         } else {
                             System.out.println("The amount is not able to pay the price. Please deposit the money!");
-                            break;
+                            beenPaid = false;
+                            wf.writeFile(DataBase, Accounts);
+                            return beenPaid;
                         }
                     }
                 }
             }
         }
-        wf.writeFile(DataBase, Accounts);
+        return beenPaid;
     }
 
     @Override
@@ -172,4 +177,29 @@ public class UserAccount extends Account implements ShoppingCartManage,eWalletMa
             }
         }
     }
-}
+    public void exchange(Account p, String name){
+        ReadFile rf = new ReadFile();
+        WriteFile wf = new WriteFile();
+        Accounts = rf.readFile(DataBase);
+        AccountManage am = new AccountManage();
+        boolean hasBeenPaid = Payment(p, name);
+        if(hasBeenPaid){
+            for(Account a : Accounts){
+                if(am.checkRole(a) == 1){
+                    for(Product prod : ((Seller)a).getListSeller().getList()){
+                        if(prod.getName().equals(name)){
+                            double currentAmount = ((Seller)a).geteWallet().getAmount();
+                            currentAmount += prod.getPrice();
+                            ((Seller)a).geteWallet().setAmount(currentAmount);
+                            System.out.println("Success!");
+                            break;
+                        }
+                    }
+                }
+                }
+            }
+        wf.writeFile(DataBase, Accounts);
+        }
+    }
+
+
