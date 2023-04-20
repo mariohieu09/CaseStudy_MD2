@@ -30,7 +30,7 @@ public class Main {
                         UserAccount user = new UserAccount(a.getAccountName(), a.getPassword());
                         ProductDisplay.display();
                         while (check != 1) {
-                            System.out.println("\n1.Check the cart \n2.Adding new product \n3.Payment \n4.Search \n5.Sort the List \n6.Deposit the amount \n7.Display the invoice history \n0.Exit");
+                            System.out.println("\n1.Check the cart \n2.Adding new product \n3.Payment \n4.Search \n5.Sort the List and display the list \n6.Deposit the amount \n7.Display the invoice history \n0.Exit");
                             int t = sc.nextInt();
                             sc.nextLine();
                             switch (t) {
@@ -53,8 +53,9 @@ public class Main {
                                     name = sc.nextLine();
                                     if(user.checkTheQuantity(name)){
                                         user.reduceQuantity(name);
-                                       boolean beenPaid =  user.exchange(user, name);
+                                       boolean beenPaid = user.Payment(user,name);
                                        if(beenPaid){
+                                           user.exchange(user,name);
                                            user.addPaidcheck(user, name);
                                            user.getPaidmentcheck(user, name);
                                        }
